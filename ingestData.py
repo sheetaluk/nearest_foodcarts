@@ -29,7 +29,7 @@ def has_lat_long(foodcart_dict):
 
 riak_client = riak.RiakClient(
   protocol='http', host='54.164.165.43', http_port=8098)
-foodcart_bucket = riak_client.bucket('foodcarts_test3')
+foodcart_bucket = riak_client.bucket('foodcarts_test4')
 
 foodcarts_json_data = requests.get(
     'http://data.sfgov.org/resource/rqzj-sfat.json')

@@ -5,6 +5,8 @@ from app import app
 import exceptions
 import haversine
 
+app.debug=True
+
 """
 Function to check if foodcarts for geohash exists.
 
@@ -75,7 +77,7 @@ def compute_foodcarts_for_geohash(
 
     return json.dumps(foodcarts_in_radius)
   except Exception as e:
-    app.logger.error("computer_foodcarts_for_geohash: Riak read exception")
+    app.logger.error("compute_foodcarts_for_geohash: Riak read exception")
     app.logger.error("%s", str(e))
     raise exceptions.FoodcartsRiakReadException(str(e))
 

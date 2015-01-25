@@ -12,9 +12,7 @@ Param foodcart_dict dict a foodcart object.
 Returns Bool True if approved.
 """
 def has_status_approved(foodcart_dict):
-  if foodcart_dict['status'].lower() == 'approved':
-    return True
-  return False
+  return foodcart_dict['status'].lower() == 'approved'
 
 """
 Function to check if a foodcart has lat and long.
@@ -36,7 +34,8 @@ foodcart_bucket = riak_client.bucket('foodcarts_test3')
 foodcarts_json_data = requests.get(
     'http://data.sfgov.org/resource/rqzj-sfat.json')
 foodcarts_dict = json.loads(foodcarts_json_data.text)
-for i in range(len(foodcarts_dict)):
+foodcarts_dict_len = len(foodcarts_dict)
+for i in range(foodcarts_dict_len):
   if has_status_approved(foodcarts_dict[i]) and \
     has_lat_long(foodcarts_dict[i]):
     key = foodcart_bucket.new(

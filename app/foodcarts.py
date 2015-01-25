@@ -1,19 +1,118 @@
-import riak
 import json
 import geohash
 
 from app import app
-
+import exceptions
 import haversine
 
-riak_client = riak.RiakClient(
-  protocol=app.config['riak_protocol'], \
-  host=app.config['riak_node'], \
-  http_port=app.config['riak_http_port'])
-foodcarts_bucket = riak_client.bucket(
-  app.config['riak_foodcarts_bucket'])
-foodcarts_for_geohash_bucket = riak_client.bucket(
-  app.config['riak_foodcarts_for_geohash_bucket'])
+"""
+Function to check if foodcarts for geohash exists.
+
+Param loc_geohash string a geohash.
+
+Returns Bool True if foodcarts exist for geohash.
+"""
+def foodcarts_for_geohash_exists(loc_geohash):
+  try:
+    foodcarts_for_geohash_bucket = \
+      app.config['datastore'].get_foodcarts_for_geohash_bucket()
+    return foodcarts_for_geohash_bucket.get(loc_geohash).exists
+  except Exception as e:
+    app.logger.error("foodcarts_for_geohash_exists: Riak read exception")
+    app.logger.error("%s", str(e))
+    raise exceptions.FoodcartsRiakReadException(str(e))
+
+
+"""
+Function to return foodcarts for geohash.
+
+Param loc_geohash string a geohash.
+
+Returns Array of foodcarts for geohash.
+"""
+def get_foodcarts_for_geohash(loc_geohash):
+  try:
+    foodcarts_for_geohash_bucket = \
+      app.config['datastore'].get_foodcarts_for_geohash_bucket()
+    return foodcarts_for_geohash_bucket.get(loc_geohash).data
+  except Exception as e:
+    app.logger.error("get_foodcarts_for_geohash: Riak read exception")
+    app.logger.error("%s", str(e))
+    raise exceptions.FoodcartsRiakReadException(str(e))
+
+
+"""
+Function to compute foodcarts within radius
+for a set of foodcarts within a broader geohash.
+
+Param lat string lat.
+Param long string long.
+Param loc_geohash string geohash for given lat long.
+Param radius float search radius.
+
+Returns Json list of foodcart objects
+"""
+def compute_foodcarts_for_geohash(
+  lat, long, loc_geohash, radius):
+
+  foodcarts_in_radius = []
+
+  try:
+    foodcarts_bucket = \
+      app.config['datastore'].get_foodcarts_bucket()
+    foodcart_keys = foodcarts_bucket.get_index(
+      "geohash_bin", loc_geohash)
+    for foodcart_key in foodcart_keys:
+      foodcart_data = foodcarts_bucket.get(
+        foodcart_key.encode('utf8')).data
+
+      if haversine.haversine_distance(
+        (lat, long),
+        (float(foodcart_data['latitude']),
+          float(foodcart_data['longitude']))) \
+        <= radius:
+        foodcarts_in_radius.append(foodcart_data)
+
+    return json.dumps(foodcarts_in_radius)
+  except Exception as e:
+    app.logger.error("computer_foodcarts_for_geohash: Riak read exception")
+    app.logger.error("%s", str(e))
+    raise exceptions.FoodcartsRiakReadException(str(e))
+
+"""
+Function to cache computed foodcarts in riak.
+
+Param loc_geohash string geohash for given lat long.
+Param computed_foodcarts_for_geohash 
+  string json list of foodcart objects.
+"""
+def save_foodcarts_for_geohash(
+  loc_geohash, computed_foodcarts_for_geohash):
+  try:
+    foodcarts_for_geohash_bucket = \
+      app.config['datastore'].get_foodcarts_for_geohash_bucket()
+    key = foodcarts_for_geohash_bucket.new(
+      loc_geohash, data=computed_foodcarts_for_geohash)
+    key.store()
+  except Exception as e:
+    app.logger.error("save_foodcarts_for_geohash: Riak write exception")
+    app.logger.error("%s", str(e))
+    raise exceptions.FoodcartsRiakWriteException(str(e))
+
+
+"""
+Function to verify lat long input.
+
+Param lat float any latitude.
+Param long float any longitude.
+
+Returns Bool True if input is clean.
+"""
+def verify_input(lat, long):
+  if lat and long:
+    return True
+  return False
+
 
 """
 Function to get foodcarts data within a radius.
@@ -27,39 +126,27 @@ Returns Json list of foodcart objects.
 def get_foodcarts_within_radius(
   lat, long, radius=app.config['radius']):
 
-  if not lat or not long:
+  # verify input
+  if not verify_input(lat, long):
     app.logger.error(
-      "get_foodcarts_within_radius: lat and long required")
-    raise Exception("lat and long required")
-
+      "get_foodcarts_within_radius: \
+        lat and long required")
+    raise exceptions.FoodcartsInputException("lat long required.")
+  
+  # get 5 chars of geohash
   loc_geohash = geohash.encode(lat, long)[0:5]
-  foodcarts_in_radius = []
 
-  # if already calculated for geohash, return calculated data
-  fetched_foodcarts_for_geohash = \
-    foodcarts_for_geohash_bucket.get(loc_geohash)
-  if fetched_foodcarts_for_geohash.exists:
-    return fetched_foodcarts_for_geohash.data
+  # if foodcarts for geohash exists return data
+  if foodcarts_for_geohash_exists(loc_geohash):
+    return get_foodcarts_for_geohash(loc_geohash)
 
-  # if not yet calculated for geohash, compute nearest foodcarts
-  foodcart_keys = foodcarts_bucket.get_index(
-    "geohash_bin", loc_geohash)
-  for foodcart_key in foodcart_keys:
-    foodcart_data = foodcarts_bucket.get(
-      foodcart_key.encode('utf8')).data
-
-    if haversine.haversine_distance(
-      (lat, long),
-      (float(foodcart_data['latitude']),
-        float(foodcart_data['longitude']))) \
-      <= radius:
-      foodcarts_in_radius.append(foodcart_data)
+  # if no foodcarts for geohash, compute
+  computed_foodcarts_for_geohash = \
+    compute_foodcarts_for_geohash(
+      lat, long, loc_geohash, radius)
 
   # cache computed results for geohash
-  foodcarts_in_radius_json = \
-    json.dumps(foodcarts_in_radius)
-  key = foodcarts_for_geohash_bucket.new(
-    loc_geohash, data=foodcarts_in_radius_json)
-  key.store()
+  save_foodcarts_for_geohash(
+    loc_geohash, computed_foodcarts_for_geohash)
 
-  return foodcarts_in_radius_json
+  return computed_foodcarts_for_geohash

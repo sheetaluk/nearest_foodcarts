@@ -15,11 +15,8 @@ Returns Json list of foodcart objects.
 """
 @app.route('/api/v1.0/nearest_foodcarts', methods=['GET'])
 def get_nearest_foodcarts():
-  #lat = float(request.args.get('user_lat'))
-  #long = float(request.args.get('user_long'))
-
-  lat = 37.776775
-  long = -122.416791
+  lat = float(request.args.get('user_lat'))
+  long = float(request.args.get('user_long'))
 
   if not lat or not long:
     app.logger.error(

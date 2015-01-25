@@ -6,7 +6,7 @@ from datastore import Datastore
 
 app = Flask(__name__)
 
-app.config['radius'] = 2 #km
+app.config['radius'] = 1 #km
 
 app.config['riak_node'] = '54.164.165.43'
 app.config['riak_http_port'] = 8098

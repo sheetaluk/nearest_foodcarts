@@ -67,7 +67,6 @@ def compute_foodcarts_for_geohash(
     for foodcart_key in foodcart_keys:
       foodcart_data = foodcarts_bucket.get(
         foodcart_key.encode('utf8')).data
-
       if haversine.haversine_distance(
         (lat, long),
         (float(foodcart_data['latitude']),
@@ -77,7 +76,8 @@ def compute_foodcarts_for_geohash(
 
     return json.dumps(foodcarts_in_radius)
   except Exception as e:
-    app.logger.error("compute_foodcarts_for_geohash: Riak read exception")
+    app.logger.error(
+      "compute_foodcarts_for_geohash: Riak read exception")
     app.logger.error("%s", str(e))
     raise exceptions.FoodcartsRiakReadException(str(e))
 
@@ -97,7 +97,8 @@ def save_foodcarts_for_geohash(
       loc_geohash, data=computed_foodcarts_for_geohash)
     key.store()
   except Exception as e:
-    app.logger.error("save_foodcarts_for_geohash: Riak write exception")
+    app.logger.error(
+      "save_foodcarts_for_geohash: Riak write exception")
     app.logger.error("%s", str(e))
     raise exceptions.FoodcartsRiakWriteException(str(e))
 
@@ -133,7 +134,8 @@ def get_foodcarts_within_radius(
     app.logger.error(
       "get_foodcarts_within_radius: \
         lat and long required")
-    raise exceptions.FoodcartsInputException("lat long required.")
+    raise exceptions.FoodcartsInputException(
+      "lat long required.")
   
   # get 5 chars of geohash
   loc_geohash = geohash.encode(lat, long)[0:5]

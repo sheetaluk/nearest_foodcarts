@@ -18,10 +18,5 @@ def get_nearest_foodcarts():
   lat = float(request.args.get('user_lat'))
   long = float(request.args.get('user_long'))
 
-  if not lat or not long:
-    app.logger.error(
-      "get_nearest_foodcarts: lat and long required")
-    raise Exception("lat and long required")
-
   return foodcarts.get_foodcarts_within_radius(
     lat, long, app.config['radius'])

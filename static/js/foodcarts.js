@@ -3,8 +3,6 @@
   var DEFAULT_USER_LONG = -122.416791;
   var DEFAULT_USER_MARKER_TITLE = 'User Location';
 
-  var TEST_URL =
-    'http://0.0.0.0:5000/api/v1.0/nearest_foodcarts';
   var GET_FOODCARTS_API_URL =
     'http://vast-castle-9076.herokuapp.com/api/v1.0/nearest_foodcarts';
 
@@ -15,7 +13,7 @@
   
   // Method to return URL for fetching foodcarts
   var getUrlForFetchingFoodcarts = function(lat, long) {
-    return TEST_URL +
+    return GET_FOODCARTS_API_URL +
       '?user_lat=' +
       lat +
       '&user_long=' +
@@ -95,6 +93,7 @@
         long: event.latLng.lng()
       });
       userpinMarker.setPosition(createNewLatlng(userpin.get('lat'), userpin.get('long')));
+      map.setCenter(userpinMarker.getPosition());
       foodcarts.fetch({reset: true, url: getUrlForFetchingFoodcarts(userpin.get('lat'), userpin.get('long'))});
     });
   };

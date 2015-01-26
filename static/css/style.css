@@ -1,0 +1,10 @@
+html, body, #map-canvas {
+  height: 100%;
+  margin: 0px;
+  padding: 0px
+}
+
+.food-items {
+  margin-top: 5px;
+  max-width: 200px;
+}

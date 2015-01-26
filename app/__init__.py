@@ -1,10 +1,13 @@
 import os
 import riak
-
 from flask import Flask
 from datastore import Datastore
+from flask.ext.cors import CORS, cross_origin
 
 app = Flask(__name__)
+
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 app.config['radius'] = 1 #km
 

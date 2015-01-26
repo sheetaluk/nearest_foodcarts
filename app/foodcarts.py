@@ -130,7 +130,6 @@ Returns Json list of foodcart objects.
 """
 def get_foodcarts_within_radius(
   lat, long, radius=app.config['radius']):
-  radius = 3;
   # verify input
   if not verify_input(lat, long):
     app.logger.error(

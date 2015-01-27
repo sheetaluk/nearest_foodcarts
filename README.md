@@ -62,7 +62,7 @@ What I could do in addition
 
 What I could do differently
 ----------------------------
-1. Computing the nearby foodcarts can be done a little better. One other way would be to search for foodcarts within    a tight geohash string(long) and then truncate the geohash 1 charecter at a time till we have a satisfactory
+1. Computing the nearby foodcarts can be done a little better. One other way would be to search for foodcarts within    a tight geohash string(long) and then truncate the geohash 1 character at a time till we have a satisfactory
    number of results, which we can then return to the user.
 2. I have not used any build tools for the app. 
 3. The JS could be refactored into seperate files, library files downloaded and then minified, concatenated etc.

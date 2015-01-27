@@ -52,7 +52,7 @@ What I could do in addition
      3. User can see a list of foodcarts instead of having to click on each marker to see info.
      4. User sees only valid and current foodcarts.
      5. User can input radius to fetch foodcarts for.
-4. Get a code reviewer.
+4. Find a human code reviewer.
 
 What I could do differently
 ----------------------------

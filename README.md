@@ -12,7 +12,11 @@ The list of foodcarts will refresh when the user updates his location, by clicki
 The name, address and types of foods served will be displayed when the user clicks on any of the foodcart markers.
 The map has a default user location set in SFO.
 
-Note: We have to decide what nearby means. Are two lat&longs near each other based on distance? Or is it how much time it takes to get from one lat&long to an other. I have assumed the former, but in reality it might not apply to all cities.
+Notes:
+We have to decide what nearby means. Are two lat&longs near each other based on distance? Or is it how much time it takes to get from one lat&long to an other. I have assumed the former, but in reality it might not apply to all cities.
+Ex: Grid system of roads vs concentric
+Nearby might also be different for people who walk and people using vehicles.
+Ex: NYC has a number of one ways, NY and NJ are close but seperated by the Hudson.
 
 Architecture
 -------------

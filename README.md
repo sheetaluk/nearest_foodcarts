@@ -69,8 +69,3 @@ Misc
 My husband had used my laptop sometime back for a pet project and after my first commit I realised that the ssh keys
 were still tied to his account.
 amr46 is not a contributor.
-
-Demo
------
-1. s3: http://uber.foodcarts.com.s3-website-us-east-1.amazonaws.com/
-2. heroku: curl -i 'http://vast-castle-9076.herokuapp.com/api/v1.0/nearest_foodcarts?user_lat=37.776775&user_long=-122.416791'

@@ -72,5 +72,5 @@ amr46 is not a contributor.
 
 Demo
 -----
-s3: http://uber.foodcarts.com.s3-website-us-east-1.amazonaws.com/
-heroku: curl -i 'http://vast-castle-9076.herokuapp.com/api/v1.0/nearest_foodcarts?user_lat=37.776775&user_long=-122.416791'
+1. s3: http://uber.foodcarts.com.s3-website-us-east-1.amazonaws.com/
+2. heroku: curl -i 'http://vast-castle-9076.herokuapp.com/api/v1.0/nearest_foodcarts?user_lat=37.776775&user_long=-122.416791'

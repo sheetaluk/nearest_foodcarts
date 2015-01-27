@@ -47,11 +47,11 @@ What I could do in addition
 2. Exception handling: I raise exceptions and propogate them upwards. It might be worth while to discuss how we want the
      app to behave in case of different exceptions/error.
 3. Additional features for current dataset:
-     3.1 User can search for foodcart.
-     3.2 User can see foodcart ratings when available.
-     3.3 User can see a list of foodcarts instead of having to click on each marker to see info.
-     3.4 User sees only valid and current foodcarts.
-     3.5 User can input radius to fetch foodcarts for.
+     3.1. User can search for foodcart.
+     3.2. User can see foodcart ratings when available.
+     3.3. User can see a list of foodcarts instead of having to click on each marker to see info.
+     3.4. User sees only valid and current foodcarts.
+     3.5. User can input radius to fetch foodcarts for.
 
 What I could do differently
 ----------------------------

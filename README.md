@@ -5,7 +5,7 @@ Problem
 Solution
 ---------
 1. [Demo](http://uber.foodcarts.com.s3-website-us-east-1.amazonaws.com/)
-2. Curl: curl -i 'http://vast-castle-9076.herokuapp.com/api/v1.0/nearest_foodcarts?user_lat=37.776775&user_long=-122.416791'
+2. curl -i 'http://vast-castle-9076.herokuapp.com/api/v1.0/nearest_foodcarts?user_lat=37.776775&user_long=-122.416791'
 
 This web application is an interactive map, which marks foodcarts near a user marked location, represented by a pin.
 The list of foodcarts will refresh when the user updates his location, by clicking on any point in the map.

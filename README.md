@@ -44,15 +44,15 @@ scalability and availability will be a cinch.
 What I could do in addition
 ----------------------------
 1. Integration tests: I have to figure out how to write integration tests for my Flask app. 
-2. Exception handling: I raise exceptions and propogate them upwards. It might be worth while to discuss how we want the
-     app to behave in case of different exceptions/error.
-3. Additional features for current dataset:
+2. Exception handling: I raise exceptions and propogate them upwards. It might be worth while to discuss how we want the app to behave in case of different exceptions/error.
+3. Seperate dev/test and prod configurations. 
+4. Additional features for current dataset:
      1. User can search for foodcart.
      2. User can see foodcart ratings when available.
      3. User can see a list of foodcarts instead of having to click on each marker to see info.
      4. User sees only valid and current foodcarts.
      5. User can input radius to fetch foodcarts for.
-4. Find a human code reviewer.
+5. Find a human code reviewer.
 
 What I could do differently
 ----------------------------

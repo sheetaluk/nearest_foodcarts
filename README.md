@@ -75,4 +75,5 @@ Misc
 -----
 My husband had used my laptop sometime back for a pet project and after my first commit I realised that the ssh keys
 were still tied to his account.
-amr46 is not a contributor.
+amr46 is not a contributor.  
+I did not write the Haverine distance function.

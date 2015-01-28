@@ -13,9 +13,9 @@ app.config['radius'] = 1 #km
 app.config['riak_node'] = '54.164.165.43'
 app.config['riak_http_port'] = 8098
 app.config['riak_protocol'] = 'http'
-app.config['riak_foodcarts_bucket'] = 'foodcarts_test5'
+app.config['riak_foodcarts_bucket'] = 'foodcarts_prod'
 app.config['riak_foodcarts_for_geohash_bucket'] = \
-  'foodcarts_for_geohash_test10'
+  'foodcarts_for_geohash_prod'
 
 riak_client = riak.RiakClient(
   protocol=app.config['riak_protocol'], \

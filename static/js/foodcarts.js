@@ -1,4 +1,6 @@
 (function($) {
+  "user strict";
+
   var DEFAULT_USER_LAT = 37.776775;
   var DEFAULT_USER_LONG = -122.416791;
   var DEFAULT_USER_MARKER_TITLE = 'User Location';

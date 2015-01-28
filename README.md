@@ -12,6 +12,12 @@ The list of foodcarts will refresh when the user updates his location, by clicki
 The name, address and types of foods served will be displayed when the user clicks on any of the foodcart markers.
 The map has a default user location set in SFO.
 
+###Notes:
+We have to decide what nearby means. Are two lat&longs near each other based on distance? Or is it how much time it takes to get from one lat&long to an other. I have assumed the former, but in reality it might not apply to all cities.  
+Ex: Grid system of roads vs concentric  
+Nearby might also be different for people who walk and people using vehicles.  
+Ex: NYC has a number of one ways, NY and NJ are close but seperated by the Hudson.  
+
 Architecture
 -------------
 Each foodcart object is added to the foodcarts bucket and indexed with a short geohash (first 5 chars).
@@ -44,19 +50,19 @@ scalability and availability will be a cinch.
 What I could do in addition
 ----------------------------
 1. Integration tests: I have to figure out how to write integration tests for my Flask app. 
-2. Exception handling: I raise exceptions and propogate them upwards. It might be worth while to discuss how we want the
-     app to behave in case of different exceptions/error.
-3. Additional features for current dataset:
+2. Exception handling: I raise exceptions and propogate them upwards. It might be worth while to discuss how we want the app to behave in case of different exceptions/error.
+3. Seperate dev/test and prod configurations. 
+4. Additional features for current dataset:
      1. User can search for foodcart.
      2. User can see foodcart ratings when available.
      3. User can see a list of foodcarts instead of having to click on each marker to see info.
      4. User sees only valid and current foodcarts.
      5. User can input radius to fetch foodcarts for.
-4. Find a human code reviewer.
+5. Find a human code reviewer.
 
 What I could do differently
 ----------------------------
-1. Computing the nearby foodcarts can be done a little better. One other way would be to search for foodcarts within    a tight geohash string(long) and then truncate the geohash 1 charecter at a time till we have a satisfactory
+1. Computing the nearby foodcarts can be done a little better. One other way would be to search for foodcarts within    a tight geohash string(long) and then truncate the geohash 1 character at a time till we have a satisfactory
    number of results, which we can then return to the user.
 2. I have not used any build tools for the app. 
 3. The JS could be refactored into seperate files, library files downloaded and then minified, concatenated etc.
@@ -69,4 +75,5 @@ Misc
 -----
 My husband had used my laptop sometime back for a pet project and after my first commit I realised that the ssh keys
 were still tied to his account.
-amr46 is not a contributor.
+amr46 is not a contributor.  
+I did not write the Haversine distance function.

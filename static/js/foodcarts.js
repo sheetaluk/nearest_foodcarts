@@ -39,12 +39,12 @@
     foodItemsFormatted +
     '</div>' +
     '</address>';
-  }
+  };
   
   // function that return a new google Latlng
   function createNewLatlng(lat, lng) {
     return new google.maps.LatLng(lat, lng);
-  }
+  };
 
   // User location pin
   var Userpin = Backbone.Model.extend({
@@ -62,7 +62,7 @@
     model: Foodcart,
     url: getUrlForFetchingFoodcarts(userpin.get('lat'), userpin.get('long'))
   });
-  var foodcarts = new Foodcarts;
+  var foodcarts = new Foodcarts();
 
   // function to initialize the map
   var map;
@@ -136,7 +136,7 @@
         foodcartMarkersArray.push(foodcartMarker);
         google.maps.event.addListener(foodcartMarker, 'click', function() {
           infowindow.setContent(getTemplate(
-            m.get('applicant'), m.get('address'), m.get('fooditems')))
+            m.get('applicant'), m.get('address'), m.get('fooditems')));
           infowindow.open(map,foodcartMarker);
         });
       });

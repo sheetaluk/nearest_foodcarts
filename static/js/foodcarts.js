@@ -1,5 +1,5 @@
 (function($) {
-  "user strict";
+  "use strict";
 
   var DEFAULT_USER_LAT = 37.776775;
   var DEFAULT_USER_LONG = -122.416791;

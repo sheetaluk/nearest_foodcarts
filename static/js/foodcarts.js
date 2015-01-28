@@ -12,12 +12,12 @@
   var MAP_CANVAS = 'map-canvas';
   
   // Method to return URL for fetching foodcarts
-  var getUrlForFetchingFoodcarts = function(lat, long) {
+  var getUrlForFetchingFoodcarts = function(lat, lng) {
     return GET_FOODCARTS_API_URL +
       '?user_lat=' +
       lat +
       '&user_long=' +
-    long;
+      lng;
   };
 
   // Method to return HTML for marker infowindow
@@ -40,8 +40,8 @@
   }
   
   // function that return a new google Latlng
-  function createNewLatlng(lat, long) {
-    return new google.maps.LatLng(lat, long);
+  function createNewLatlng(lat, lng) {
+    return new google.maps.LatLng(lat, lng);
   }
 
   // User location pin
